@@ -4,6 +4,9 @@ set noshowmode
 " sets cursor as block
 set guicursor=n-v-c:block-Cursor
 
+" sets colorcolumn
+set colorcolumn=72
+
 " sets incremental search
 set incsearch
 
