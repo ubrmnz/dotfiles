@@ -1,5 +1,6 @@
 syntax enable
 set noshowmode
+set termguicolors
 
 " sets cursor as block
 set guicursor=n-v-c:block-Cursor
@@ -22,8 +23,8 @@ set number
 " highlight current line
 set cursorline
 
-" set colorscheme
-colorscheme sonokai
+" set highlight search
+set hlsearch
 
 "let g:molokai_original = 1
 "let g:rehash256 = 1
@@ -64,7 +65,12 @@ Plug 'itchyny/lightline.vim'
 Plug 'sheerun/vim-polyglot'
 Plug 'luochen1990/rainbow'
 Plug 'neoclide/coc.nvim', {'branch': 'release'}
+Plug 'fatih/vim-go', {'do': ':GoUpdateBinaries'}
+Plug 'dracula/vim', {'as':'dracula'}
 call plug#end()
+
+" set colorscheme
+colorscheme dracula
 
 "---EMMET CONFIG
 
@@ -97,6 +103,7 @@ let g:user_emmet_settings = {
 
 "---NERDTree Config:
 nnoremap <leader>n :NERDTreeFocus <CR>
+nnoremap <C-n> :NERDTreeToggle <CR>
 
 "--vim-javascript ( colorful style )
 let g:vim_jsx_pretty_colorful_config = 1 " default 0
