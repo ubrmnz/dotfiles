@@ -2,6 +2,35 @@ syntax enable
 set noshowmode
 set termguicolors
 
+" set unicode characters
+set encoding=utf-8
+
+" TextEdit might fail if hidden is not set.
+set hidden
+
+" Some servers have issues with backup files, see #649.
+set nobackup
+set nowritebackup
+
+" Give more space for displaying messages.
+set cmdheight=3
+
+" Having longer updatetime (default is 4000 ms = 4 s) leads to noticeable
+" delays and poor user experience.
+set updatetime=300
+
+" Don't pass messages to |ins-completion-menu|.
+set shortmess+=c
+
+" Always show the signcolumn, otherwise it would shift the text each time
+" diagnostics appear/become resolved.
+if has("nvim-0.5.0") || has("patch-8.1.1564")
+  " Recently vim can merge signcolumn and number column into one
+  set signcolumn=number
+else
+  set signcolumn=yes
+endif
+
 " sets cursor as block
 set guicursor=n-v-c:block-Cursor
 
@@ -24,10 +53,12 @@ set number
 set cursorline
 
 " set highlight search
-set hlsearch
+set nohlsearch
 
-"let g:molokai_original = 1
-"let g:rehash256 = 1
+" let g:rehash256 = 1
+
+" SQLCompletion Issue Fix
+let g:omni_sql_no_default_maps = 1
 
 " disable visual mode on click
 set mouse-=a
@@ -52,20 +83,16 @@ call plug#begin()
 Plug 'mattn/emmet-vim'
 Plug 'Yggdroot/indentLine'
 Plug 'maxmellon/vim-jsx-pretty'
-Plug 'dense-analysis/ale'
 Plug 'tpope/vim-commentary'
 Plug 'pangloss/vim-javascript'
 Plug 'leafgarland/typescript-vim'
-Plug 'w0rp/ale'
-Plug 'prettier/vim-prettier'
+Plug 'prettier/vim-prettier', { 'do': 'npm install --frozen-lockfile --production' }
 Plug 'preservim/nerdtree'
 Plug 'junegunn/fzf', { 'do': { -> fzf#install() }}
 Plug 'junegunn/fzf.vim'
 Plug 'itchyny/lightline.vim'
-Plug 'sheerun/vim-polyglot'
 Plug 'luochen1990/rainbow'
 Plug 'neoclide/coc.nvim', {'branch': 'release'}
-Plug 'fatih/vim-go', {'do': ':GoUpdateBinaries'}
 Plug 'dracula/vim', {'as':'dracula'}
 call plug#end()
 
@@ -101,38 +128,19 @@ let g:user_emmet_settings = {
 \  },
 \}
 
-"---NERDTree Config:
+"---NERDTree Config
 nnoremap <leader>n :NERDTreeFocus <CR>
 nnoremap <C-n> :NERDTreeToggle <CR>
 
 "--vim-javascript ( colorful style )
 let g:vim_jsx_pretty_colorful_config = 1 " default 0
 
-"---ALE CONFIG"
-let g:ale_fixers = {
-\	'*': ['remove_trailing_lines', 'trim_whitespace'],
-\	'css': ['prettier'],
-\	'javascript': ['prettier', 'eslint'],
-\	'json': ['prettier'],
-\	'scss': ['prettier'],
-\	'python': ['black', 'isort'],
-\	'yaml': ['prettier'],
-\	}
+" CoC extensions
+let g:coc_global_extensions = ['coc-tsserver']
 
-	let g:ale_linters = {
-\		'css': ['prettier'],
-\		'javascript': ['prettier', 'eslint'],
-\		'json': ['prettier'],
-\		'python': ['flake8'],
-\		'scss': ['prettier'],
-\		'yaml': ['prettier'],
-\		}
-
-let g:ale_lint_on_save = 1
-let g:ale_lint_on_text_changed = 0
-
-"Fix files automatically on save"
-let g:ale_fix_on_save = 1
+"syntax highlighting for large files
+autocmd BufEnter *.{js,jsx,ts,tsx} : syntax sync fromstart
+autocmd BufLeave *.{js,jsx,ts,tsx} : syntax sync clear
 
 "---FZF CONFIG"
 noremap <silent> <C-f> :fzf<C-R>
@@ -145,8 +153,8 @@ if !has('gui_running')
 endif
 
 let g:lightline= {
-			\ 'colorscheme': 'molokai',
-			\}
+\ 'colorscheme': 'molokai',
+\}
 
 "---RAINBOW CONFIG"
 let g:rainbow_active = 1
