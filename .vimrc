@@ -131,6 +131,7 @@ let g:user_emmet_settings = {
 "---NERDTree Config
 nnoremap <leader>n :NERDTreeFocus <CR>
 nnoremap <C-n> :NERDTreeToggle <CR>
+nnoremap <C-w> :q <CR>
 
 "--vim-javascript ( colorful style )
 let g:vim_jsx_pretty_colorful_config = 1 " default 0
